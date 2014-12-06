@@ -154,7 +154,20 @@ def readris(filename, wok=True):
                     raise IOError(text)
                 current[tag] = getcontent(line)
 
+    refs = [clean_reference(r) for r in refs]
+
     return refs
+
+def clean_reference(ref):
+    """Remove trailing spaces and line breaks from the entries"""
+    for k,v in ref.iteritems():
+        try:
+            nv = v.strip()
+        except AttributeError:
+            nv = [el.strip() for el in v]
+        ref[k] = nv
+    return ref
+
 
 
 def writekey(key, value):
