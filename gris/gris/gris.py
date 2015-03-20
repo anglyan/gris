@@ -169,8 +169,50 @@ def clean_reference(ref):
     return ref
 
 
+def tag2string(ref, t):
+    if t in ref.keys():
+        if isinstance(ref[t], list):
+            return " ".join(ref[t])
+        else:
+            return ref[t]
+    else:
+        return 'NA'
 
-def writekey(key, value):
+def tag2list(ref, t):
+    if t in ref.keys():
+        if isinstance(ref[t], list):
+            return ref[t]
+        else:
+            return [ref[t]]
+    else:
+        return []
+
+def get_authors(ref):
+    return tag2list(ref, 'AU')
+
+def get_abstract(ref):
+    return tag2string(ref, 'AB')
+
+def get_pubyear(ref):
+    return tag2string(ref, 'PY')
+
+def get_title(ref):
+    return tag2string(ref, 'TI')
+
+def get_volume(ref):
+    return tag2string(ref, 'VL')
+
+def get_issue(ref):
+    return tag2string(ref, 'IS')
+
+def get_page(ref):
+    p = tag2string(ref, 'BP')
+    if p == 'NA':
+        return tag2string(ref, 'AR')
+    else:
+        return p
+
+def write_key(key, value):
     if isinstance(value, list):
         lines = [key + " " + value[0].strip()]
         for val in value[1:]:
@@ -179,11 +221,11 @@ def writekey(key, value):
     else:
         return [key + " " + value.strip()]
 
-def writeentry(entry):
-    entrylines = writekey('PT', entry['PT'])
+def write_entry(entry):
+    entrylines = write_key('PT', entry['PT'])
     for k, v in entry.iteritems():
         if k != 'PT':
-            entrylines.extend(writekey(k, v))
+            entrylines.extend(write_key(k, v))
     entrylines.append('ER')
     return entrylines
 
@@ -199,7 +241,7 @@ def writeris(entrylist):
              'VR 1.0']
     filelines = header
     for entry in entrylist:
-        filelines.extend(writeentry(entry))
+        filelines.extend(write_entry(entry))
         filelines.append("")
     filelines.append('EF')
     return filelines
