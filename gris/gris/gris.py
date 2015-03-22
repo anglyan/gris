@@ -66,7 +66,7 @@ ristags = {'TY': "Record kind",
         'ER': "[End of Reference]"
         }
 
-missingvalue = 'NA'
+missing_string = 'NA'
 
 def readris(filename, wok=True):
     """Parse a ris file and return a list of entries.
@@ -180,7 +180,7 @@ def tag2string(ref, t):
         else:
             return ref[t]
     else:
-        return 'NA'
+        return missing_string
 
 def tag2list(ref, t):
     """Return the content of tag t as a list, [] if the tag is not present
@@ -194,29 +194,37 @@ def tag2list(ref, t):
         return []
 
 def get_authors(ref):
-    return tag2list(ref, 'AU')
+    if 'AF' in ref:
+        return tag2list(ref, 'AF')
+    else:
+        return tag2list(ref, 'AU')
 
 def get_abstract(ref):
+    """Return the abstract"""
     return tag2string(ref, 'AB')
 
 def get_pubyear(ref):
+    """Return the publication year"""
     return tag2string(ref, 'PY')
 
 def get_title(ref):
+    """Return the pubication title"""
     return tag2string(ref, 'TI')
 
 def get_volume(ref):
+    """Return the publication volume"""
     return tag2string(ref, 'VL')
 
 def get_issue(ref):
+    """Return the publication issue"""
     return tag2string(ref, 'IS')
 
 def get_page(ref):
-    p = tag2string(ref, 'BP')
-    if p == 'NA':
-        return tag2string(ref, 'AR')
+    """Return the page and, if not present, the article number"""
+    if 'BP' in ref:
+        return tag2string(ref, 'BP')
     else:
-        return p
+        return tag2string(ref, 'AR')
 
 def write_key(key, value):
     if isinstance(value, list):
