@@ -66,6 +66,7 @@ ristags = {'TY': "Record kind",
         'ER': "[End of Reference]"
         }
 
+missingvalue = 'NA'
 
 def readris(filename, wok=True):
     """Parse a ris file and return a list of entries.
@@ -170,7 +171,10 @@ def clean_reference(ref):
 
 
 def tag2string(ref, t):
-    if t in ref.keys():
+    """Return the content of tag t as a string, 'NA' if the tag is not
+    present"""
+
+    if t in ref:
         if isinstance(ref[t], list):
             return " ".join(ref[t])
         else:
@@ -179,7 +183,9 @@ def tag2string(ref, t):
         return 'NA'
 
 def tag2list(ref, t):
-    if t in ref.keys():
+    """Return the content of tag t as a list, [] if the tag is not present
+    """
+    if t in ref:
         if isinstance(ref[t], list):
             return ref[t]
         else:
