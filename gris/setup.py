@@ -6,11 +6,11 @@
 from distutils.core import setup
 setup(name = 'gris',
     description = "parser of RIS and WOK bibliography file format",
-    version = '0.2.0',
+    version = '0.3.0',
     author = "Angel Yanguas-Gil",
     author_email = "angel.yanguas@gmail.com",
     download_url = (
-        "http://ayanguasgil.net/stuff/gris-0.2.0.tar.gz"),
+        "http://ayanguasgil.net/stuff/gris-0.3.0.tar.gz"),
     py_modules = ['gris'],
     package_dir = {'' : 'gris'},
     classifiers = ["Development Status :: 2 - Pre-Alpha",

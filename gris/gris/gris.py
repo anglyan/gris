@@ -68,7 +68,7 @@ ristags = {'TY': "Record kind",
 
 missing_string = 'NA'
 
-def readris(filename, wok=True):
+def read_ris(filename, wok=True):
     """Parse a ris file and return a list of entries.
     
     Entries are codified as dictionaries whose keys are the
@@ -194,6 +194,7 @@ def tag2list(ref, t):
         return []
 
 def get_authors(ref):
+    """Return a list of the authors"""
     if 'AF' in ref:
         return tag2list(ref, 'AF')
     else:
@@ -227,6 +228,9 @@ def get_page(ref):
         return tag2string(ref, 'AR')
 
 def write_key(key, value):
+    """Return a string with the key, value in the WOK RIS format
+    """
+
     if isinstance(value, list):
         lines = [key + " " + value[0].strip()]
         for val in value[1:]:
@@ -235,7 +239,15 @@ def write_key(key, value):
     else:
         return [key + " " + value.strip()]
 
-def write_entry(entry):
+def write_ref(entry):
+    """Return a string with the content of the reference
+    in WOK RIS format.
+
+    entry is a dictionary where tags are keys and the values are
+    either lists or strings containing the corresponding bibliographic
+    data
+    """
+
     entrylines = write_key('PT', entry['PT'])
     for k, v in entry.iteritems():
         if k != 'PT':
@@ -243,11 +255,11 @@ def write_entry(entry):
     entrylines.append('ER')
     return entrylines
 
-def writeris(entrylist):
+def write_ris(entrylist):
     """Write a list of entries in the wok ris file format
     
-    writeris uses as an input a list of entries as codified
-    using readris, returning a list of strings. The current version
+    write_ris uses as an input a list of entries as codified
+    using read_ris, returning a list of strings. The current version
     returns a wok-compatible ris format.
 
     """
@@ -255,7 +267,7 @@ def writeris(entrylist):
              'VR 1.0']
     filelines = header
     for entry in entrylist:
-        filelines.extend(write_entry(entry))
+        filelines.extend(write_ref(entry))
         filelines.append("")
     filelines.append('EF')
     return filelines
@@ -272,7 +284,7 @@ if __name__ == '__main__':
             wok=True
     else:
         wok=True
-    refs = readris(sys.argv[1], wok)
+    refs = read_ris(sys.argv[1], wok)
     print len(refs)
     authors = [r['AU'] for r in refs]
     for a in authors:
