@@ -1,4 +1,4 @@
-#Copyright (C) 2013 Angel Yanguas-Gil
+#Copyright (c) 2013 Angel Yanguas-Gil
 #This program is free software, licensed under GPLv2 or later.
 #A copy of the GPLv2 license is provided in the root directory of
 #the source code.
@@ -6,6 +6,7 @@
 """Parse WOK and Refman's RIS files"""
 
 import re
+import csv
 
 woktag = "^[A-Z][A-Z0-9] |^ER$|^EF$"
 ristag = "^[A-Z][A-Z0-9]  - "
@@ -271,6 +272,70 @@ def write_ris(entrylist):
         filelines.append("")
     filelines.append('EF')
     return filelines
+
+
+def get_country(add):
+    """Extract the country from a ris address field
+    """
+
+    rpc = add.split(',')[-1][:-1].strip().upper()
+    if ' USA' in rpc:
+        rpc = 'USA'
+    elif len(rpc.split()[0]) == 2:
+        rpc = 'USA'
+    return rpc
+
+def recordtolist(i, ref):
+    """Transform a single record into a 2D list"""
+
+    title = tag2string(ref, 'TI')
+    authors = [au.upper() for au in tag2list(ref, 'AU')]
+    categories = [c.strip() for c in tag2string(ref, 'WC').split(';')]
+    source = tag2string(ref, 'SO')
+    dt = tag2string(ref, 'DT')
+    tc = tag2string(ref, 'TC')
+    pubyear = tag2string(ref, 'PY')
+    aff = tag2list(ref, 'C1')
+    reprint = tag2string(ref, 'RP')
+    rpc = get_country(reprint)
+    affc = [get_country(ai) for ai in aff]
+    doi = tag2string(ref, 'DI')
+    if len(aff) == 0:
+        aff = ['NA']
+        affc = ['NA']
+    if len(categories) == 0:
+        categories = ['NA']
+    names = [an.split(',')[0].strip() if ',' in an else an for an in authors]
+    lines = [[str(i), dt, source,
+            pubyear, title, doi, tc, reprint, rpc, au, name, 
+            aff[0], affc[0], categories[0]]
+            for (au, name) in zip(authors, names)]
+    lines2 = [[str(i), dt, source, pubyear,
+            title, doi, tc, reprint, rpc, authors[0],
+            names[0], ai, aci, categories[0]] for ai,aci in zip(aff[1:], affc[1:])]
+    lines3 = [[str(i), dt, source, pubyear,
+            title, doi, tc, reprint, rpc, authors[0],
+            names[0], aff[0], affc[0], c] for c in categories[1:]]
+
+    return lines + lines2 + lines3
+
+
+def refs2csv(refs, filename):
+    """Save a list of references to a csv file
+    """
+
+    table = [["Ref #", "Document type", "Source", "Year", "Title",
+            "DOI", "Times cited", "Reprint Author", "Reprint country", 
+            "Author, complete",
+            "Author name", "Affiliation", "Affiliation country",
+            "Category"]]
+    for i, ref in enumerate(refs):
+        r = ristocsv(i, ref)
+        table.extend(r)
+    out = csv.writer(open(csvname, 'w'))
+    out.writerows(table)
+    return table
+
 
 
 if __name__ == '__main__':
