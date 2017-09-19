@@ -3,4 +3,5 @@ build/
 sdist/
 MANIFEST
 *.py[cod]
+*.bak
 

@@ -6,14 +6,15 @@
 from distutils.core import setup
 setup(name = 'gris',
     description = "parser of RIS and WOK bibliography file format",
-    version = '0.4.0',
+    version = '0.5.0',
     author = "Angel Yanguas-Gil",
     author_email = "angel.yanguas@gmail.com",
-    download_url = "https://github.com/anglyan/gris/tarball/0.4.0",
+    download_url = "https://github.com/anglyan/gris/tarball/0.5.0",
     url = "https://github.com/anglyan/gris.git",
     py_modules = ['gris'],
     package_dir = {'' : 'gris'},
     classifiers = ["Development Status :: 3 - Alpha",
+        "Programming Language :: Python :: 3"
         "Environment :: Console",
         "Topic :: Scientific/Engineering",
         "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",

@@ -162,7 +162,7 @@ def read_ris(filename, wok=True):
 
 def clean_reference(ref):
     """Remove trailing spaces and line breaks from the entries"""
-    for k,v in ref.iteritems():
+    for k,v in ref.items():
         try:
             nv = v.strip()
         except AttributeError:
@@ -250,7 +250,7 @@ def write_ref(entry):
     """
 
     entrylines = write_key('PT', entry['PT'])
-    for k, v in entry.iteritems():
+    for k, v in entry.items():
         if k != 'PT':
             entrylines.extend(write_key(k, v))
     entrylines.append('ER')
@@ -350,10 +350,10 @@ if __name__ == '__main__':
     else:
         wok=True
     refs = read_ris(sys.argv[1], wok)
-    print len(refs)
+    print(len(refs))
     authors = [r['AU'] for r in refs]
     for a in authors:
-        print a
+        print(a)
 
 
 
