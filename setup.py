@@ -14,7 +14,7 @@ setup(name = 'gris',
     py_modules = ['gris'],
     package_dir = {'' : 'gris'},
     classifiers = ["Development Status :: 3 - Alpha",
-        "Programming Language :: Python :: 3"
+        "Programming Language :: Python :: 3",
         "Environment :: Console",
         "Topic :: Scientific/Engineering",
         "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
