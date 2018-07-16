@@ -6,10 +6,10 @@
 from distutils.core import setup
 setup(name = 'gris',
     description = "parser of RIS and WOK bibliography file format",
-    version = '0.5.1',
+    version = '0.5.2',
     author = "Angel Yanguas-Gil",
     author_email = "angel.yanguas@gmail.com",
-    download_url = "https://github.com/anglyan/gris/tarball/0.5.0",
+    download_url = "https://github.com/anglyan/gris/tarball/0.5.2",
     url = "https://github.com/anglyan/gris.git",
     py_modules = ['gris'],
     package_dir = {'' : 'gris'},
