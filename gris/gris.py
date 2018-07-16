@@ -71,7 +71,7 @@ missing_string = 'NA'
 
 def read_ris(filename, wok=True):
     """Parse a ris file and return a list of entries.
-    
+
     Entries are codified as dictionaries whose keys are the
     different tags. For single line and singly ocurring tags,
     the content is codified as a string. In the case of multiline
@@ -82,7 +82,7 @@ def read_ris(filename, wok=True):
     filename -- input ris file
     wok -- flag, Web of Knowledge format is used if True, otherwise
            Refman's RIS specifications are used.
-    
+
     """
 
     if wok:
@@ -98,12 +98,12 @@ def read_ris(filename, wok=True):
         starttag, endtag = ris_boundtags
         ignoretags = ris_ignoretags
 
-    filelines = open(filename, 'r').readlines()
+    filelines = open(filename, encoding='utf-8-sig', mode='r').readlines()
     #Corrects for BOM in utf-8 encodings while keeping an 8-bit
     #string representation
-    st = filelines[0]
-    if (st[0], st[1], st[2]) == ('\xef', '\xbb', '\xbf'):
-        filelines[0] = st[3:]
+    #st = filelines[0]
+    #if (st[0], st[1], st[2]) == ('\xef', '\xbb', '\xbf'):
+    #    filelines[0] = st[3:]
 
     inref = False
     tag = None
@@ -125,7 +125,7 @@ def read_ris(filename, wok=True):
                     raise IOError(text)
                 else:
                     #Active tag
-                    if hasattr(current[tag], '__iter__'):
+                    if hasattr(current[tag], "append"):
                         current[tag].append(line.strip())
                     else:
                         current[tag] = [current[tag], line.strip()]
@@ -258,7 +258,7 @@ def write_ref(entry):
 
 def write_ris(entrylist):
     """Write a list of entries in the wok ris file format
-    
+
     write_ris uses as an input a list of entries as codified
     using read_ris, returning a list of strings. The current version
     returns a wok-compatible ris format.
@@ -307,7 +307,7 @@ def recordtolist(i, ref):
         categories = ['NA']
     names = [an.split(',')[0].strip() if ',' in an else an for an in authors]
     lines = [[str(i), dt, source,
-            pubyear, title, doi, tc, reprint, rpc, au, name, 
+            pubyear, title, doi, tc, reprint, rpc, au, name,
             aff[0], affc[0], categories[0]]
             for (au, name) in zip(authors, names)]
     lines2 = [[str(i), dt, source, pubyear,
@@ -325,7 +325,7 @@ def refs2csv(refs, filename):
     """
 
     table = [["Ref #", "Document type", "Source", "Year", "Title",
-            "DOI", "Times cited", "Reprint Author", "Reprint country", 
+            "DOI", "Times cited", "Reprint Author", "Reprint country",
             "Author, complete",
             "Author name", "Affiliation", "Affiliation country",
             "Category"]]
@@ -354,6 +354,3 @@ if __name__ == '__main__':
     authors = [r['AU'] for r in refs]
     for a in authors:
         print(a)
-
-
-
