@@ -6,7 +6,7 @@
 from distutils.core import setup
 setup(name = 'gris',
     description = "parser of RIS and WOK bibliography file format",
-    version = '0.5.0',
+    version = '0.5.1',
     author = "Angel Yanguas-Gil",
     author_email = "angel.yanguas@gmail.com",
     download_url = "https://github.com/anglyan/gris/tarball/0.5.0",
@@ -20,4 +20,3 @@ setup(name = 'gris',
         "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
         "Topic :: Utilities"]
 )
-
