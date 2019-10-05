@@ -4,13 +4,13 @@ README
 About gris
 ----------
 
-gris is a minimalistic tool to read, parse, and 
-write reference data in RIS format.
+gris is a minimalistic tool to read, parse, and
+write reference data in
+[Refman RIS format](https://en.wikipedia.org/wiki/RIS_(file_format)).
 
 RIS format codifies bibliographic data using a series of tags. There
-are two different standards: the RIS output by Thomson Reuter's
-Web of Science and the so-called Refman RIS that is used by other
-providers. This module aims to supporting both.
+are two different standards: the RIS output by
+Web of Knowledge and the original standard is used by other
+providers. This module supports both.
 
-This module has been ported to run in Python 3
-
+This module has been updated and tested in Python 3.7

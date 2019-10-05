@@ -99,11 +99,8 @@ def read_ris(filename, wok=True):
         ignoretags = ris_ignoretags
 
     filelines = open(filename, encoding='utf-8-sig', mode='r').readlines()
-    #Corrects for BOM in utf-8 encodings while keeping an 8-bit
-    #string representation
-    #st = filelines[0]
-    #if (st[0], st[1], st[2]) == ('\xef', '\xbb', '\xbf'):
-    #    filelines[0] = st[3:]
+    #WOK saves text files as utf8 with BOM, BOM is not handled automatically
+    #by python 3, so we have to use utf-8-sig to deal with it.
 
     inref = False
     tag = None
