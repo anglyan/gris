@@ -4,4 +4,4 @@ sdist/
 MANIFEST
 *.py[cod]
 *.bak
-
+.DS_Store
