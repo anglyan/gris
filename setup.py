@@ -3,7 +3,7 @@
 #A copy of the GPLv2 license is provided in the root directory of
 #the source code.
 
-from setuptools import setup
+from setuptools import setup, find_packages
 from os import path
 
 here = path.abspath(path.dirname(__file__))
@@ -12,13 +12,13 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(name = 'gris',
     description = "parser of RIS and WOK bibliography file format",
-    version = '0.6.0',
+    version = '0.6.1',
     long_description=long_description,
     long_description_content_type='text/markdown',
     author = "Angel Yanguas-Gil",
     author_email = "angel.yanguas@gmail.com",
     url = "https://github.com/anglyan/gris.git",
-    py_modules=["gris"],
+    packages=find_packages(),
     python_requires=">=3",
     classifiers = ["Development Status :: 4 - Beta",
         "Programming Language :: Python :: 3",
