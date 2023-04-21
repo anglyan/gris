@@ -69,7 +69,7 @@ ristags = {'TY': "Record kind",
 
 missing_string = 'NA'
 
-def read_ris(filename, wok=True):
+def read_ris(filename, wok=False):
     """Parse a ris file and return a list of entries.
 
     Entries are codified as dictionaries whose keys are the
@@ -135,7 +135,7 @@ def read_ris(filename, wok=True):
             if tag in ignoretags:
                 continue
             elif tag == endtag:
-                #Close the active entry and append it to the entry list
+                #Close the active entry and append it to the entry list                    
                 refs.append(current)
                 current = {}
                 inref = False
@@ -151,7 +151,12 @@ def read_ris(filename, wok=True):
                 if not inref:
                     text = "Invalid start tag in line %d:\n %s" %(ln, line)
                     raise IOError(text)
-                current[tag] = getcontent(line)
+                if tag in current:
+                    if not isinstance(current[tag], list):
+                        current[tag] = [current[tag]]
+                    current[tag].append(getcontent(line))
+                else:
+                    current[tag] = getcontent(line)
 
     refs = [clean_reference(r) for r in refs]
 
@@ -198,13 +203,28 @@ def get_authors(ref):
     else:
         return tag2list(ref, 'AU')
 
+
+def get_keywords(ref):
+    if 'KW' in ref:
+        return tag2list(ref, 'KW')
+    else:
+        return []
+
+
 def get_abstract(ref):
     """Return the abstract"""
     return tag2string(ref, 'AB')
 
+
 def get_pubyear(ref):
     """Return the publication year"""
-    return tag2string(ref, 'PY')
+    py = tag2string(ref, 'PY')
+    if py == missing_string:
+        py = tag2string(ref, 'C6')
+        if py != missing_string:
+            py = py.split()[1]
+    return py
+
 
 def get_title(ref):
     """Return the pubication title"""
