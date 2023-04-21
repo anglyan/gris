@@ -9,7 +9,7 @@ import re
 import csv
 
 woktag = "^[A-Z][A-Z0-9] |^ER$|^EF$"
-ristag = "^[A-Z][A-Z0-9]  - "
+ristag = "^[A-Z][A-Z0-9]  -"
 
 wokpat = re.compile(woktag)
 rispat = re.compile(ristag)
