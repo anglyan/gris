@@ -12,7 +12,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(name = 'gris',
     description = "parser of RIS and WOK bibliography file format",
-    version = '0.6.1',
+    version = '0.7.0',
     long_description=long_description,
     long_description_content_type='text/markdown',
     author = "Angel Yanguas-Gil",

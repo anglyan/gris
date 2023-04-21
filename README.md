@@ -14,3 +14,10 @@ Web of Knowledge and the original standard is used by other
 providers. This module supports both.
 
 This module has been updated and tested in Python 3.7
+
+License
+-------
+Copyright (C) 2013 Angel Yanguas-Gil
+
+This program is free software, licensed under GPLv2 or later.
+A copy of the GPLv2 license is provided in the root directory of the source code.

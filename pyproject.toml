@@ -1,0 +1,26 @@
+
+[build-system]
+requires = ["setuptools>=42"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gris"
+authors = [
+{ name="Angel Yanguas-Gil"}]
+version = "0.7.0"
+description = "Parser of RIS file format"
+readme = "README.md"
+keywords = ["RIS file format", "RefMan RIS", "bibliography", "parser"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
+    "Operating System :: OS Independent",
+    "Environment :: Console",
+    "Topic :: Scientific/Engineering",
+    "Topic :: Utilities"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/anglyan/gris.git"
+
