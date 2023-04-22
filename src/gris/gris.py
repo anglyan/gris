@@ -74,11 +74,11 @@ def read_ris(filename, wok=False):
                     text = "Expected tag in line %d:\n %s" %(ln, line)
                     raise IOError(text)
                 else:
-                    #Active tag
-                    if hasattr(current[tag], "append"):
-                        current[tag].append(line.strip())
+                    #Dealing with multiline records
+                    if isinstance(current[tag], list):
+                        current[tag][-1] += "\n" + line.strip()
                     else:
-                        current[tag] = [current[tag], line.strip()]
+                        current[tag] += "\n" + line.strip()
             else:
                 text = "Expected start tag in line %d:\n %s" %(ln, line)
                 raise IOError(text)
@@ -205,21 +205,26 @@ def get_page(ref):
     else:
         return tag2string(ref, 'AR')
 
-def write_key(key, value):
-    """Return a string with the key, value in the WOK RIS format
+
+def write_key(key):
+    return "{}  -".format(key)
+
+
+def write_entry(key, value):
+    """Return a string with the key, value
     """
 
-    if isinstance(value, list):
-        lines = [key + " " + value[0].strip()]
-        for val in value[1:]:
-            lines.append("   " + val.strip())
-        return lines
-    else:
-        return [key + " " + value.strip()]
+    if not isinstance(value, list):
+        value = [value]
+    
+    lines = []
+    key_str = write_key(key)
+    lines = [key_str + " " + val.strip() for val in value]
+    return lines
 
 def write_ref(entry):
     """Return a string with the content of the reference
-    in WOK RIS format.
+    in RIS format.
 
     entry is a dictionary where tags are keys and the values are
     either lists or strings containing the corresponding bibliographic
@@ -234,16 +239,14 @@ def write_ref(entry):
     return entrylines
 
 def write_ris(entrylist):
-    """Write a list of entries in the wok ris file format
+    """Write a list of entries in the RIS file format
 
     write_ris uses as an input a list of entries as codified
     using read_ris, returning a list of strings. The current version
     returns a wok-compatible ris format.
 
     """
-    header = ['FN Thompsom Reuters Web of Knowledge',
-             'VR 1.0']
-    filelines = header
+    filelines = []
     for entry in entrylist:
         filelines.extend(write_ref(entry))
         filelines.append("")
