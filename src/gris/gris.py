@@ -20,90 +20,6 @@ wok_boundtags = ('PT', 'ER')
 wok_ignoretags = ['FN', 'VR', 'EF']
 ris_ignoretags = []
 
-ris_tags_ref = {
-    'TY': "Type of reference - first tag",
-    'AU': "Author",
-    'A1': "Primary Authors",
-    'A2': "Secondary Authors",
-    'A3': "Tertiary Authors",
-    'A4': "Subsidiary Authors",
-    'AB': "Abstract",
-    'AD': "Author Address",
-    'AN': "Accession Number",
-    'AU': "Author",
-    'AV': "Location in Archives",
-    'BT': "This field maps to T2 except for Whole Book and Unpublished Work references",
-    'C1': "Custom 1",
-    'C2': "Custom 2",
-    'C3': "Custom 3",
-    'C4': "Custom 4",
-    'C5': 'Custom 5',
-    'C6': "Custom 6",
-    'C7': "Custom 7",
-    'C8': 'Custom 8',
-    'CA': "Caption",
-    'CN': "Call Number",
-    'CP': "Misc",
-    'CT': "Title of unpublished reference",
-    'CY': "Place Published",
-    'DA': "Date",
-    'DB': "Name of Database",
-    'DO': "DOI",
-    'DP': "Database Provider",
-    'ED': "Editor",
-    'EP': "End Page",
-    'ET': "Edition",
-    'ID': "Reference ID",
-    'IS': "Issue number",
-    'J1': "Periodical name: user abbreviation",
-    'J2': "Alternate Title",
-    'JA': "Periodical name: standard abbreviation",
-    'JF': "Journal/Periodical name: full format",
-    'JO': "Journal/Periodical name: full format",
-    'KW': "Keywords",
-    'L1': "Link to PDF",
-    'L2': "Link to Full-text.",
-    'L3': "Related Records",
-    'L4': "Image(s)",
-    'LA': "Language",
-    'LB': "Label",
-    'LK': "Website Link",
-    'M1': "Number",
-    'M2': "Miscellaneous 2",
-    'M3': "Type of Work",
-    'N1': "Notes",
-    'N2': "Abstract",
-    'NV': "Number of Volumes",
-    'OP': "Original Publication",
-    'PB': "Publisher",
-    'PP': "Publishing Place",
-    'PY': "Publication year",
-    'RI': "Reviewed Item",
-    'RN': "Research Notes",
-    'RP': "Reprint Edition",
-    'SE': "Section",
-    'SN': "ISBN/ISSN",
-    'SP': "Start Page",
-    'ST': "Short Title",
-    'T1': "Primary Title",
-    'T2': "Secondary Title (journal title, if applicable)",
-    'T3': "Tertiary Title",
-    'TA': "Translated Author",
-    'TI': "Title",
-    'TT': "Translated Title",
-    'U1': "User definable 1",
-    'U3': "User definable 3",
-    'U4': "User definable 4",
-    'U5': "User definable 5",
-    'UR': "URL",
-    'VL': "Volume number",
-    'VO': "Published Standard number",
-    'Y1': "Primary Date",
-    'Y2': "Access Date",
-    'ER': "End of Reference"
-}
-
-
 missing_string = 'NA'
 
 def read_ris(filename, wok=False):
@@ -115,10 +31,10 @@ def read_ris(filename, wok=False):
     or multiple key ocurrences, the content is returned as a list
     of strings.
 
-    Keyword arguments:
-    filename -- input ris file
-    wok -- flag, Web of Knowledge format is used if True, otherwise
-           Refman's RIS specifications are used.
+    Args:
+        filename (str) : input ris file
+        wok (:obj:`bool`, optional) : old WebofKnowledge's other document
+            format is used if True. Defaults False.
 
     """
 
