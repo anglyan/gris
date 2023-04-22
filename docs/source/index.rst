@@ -10,8 +10,10 @@ gris is a lightweight parser for RIS files.
 
 Table of contents
 -----------------
+
 .. toctree::
    :maxdepth: 2
+   
    apidocs/documentation
 
 

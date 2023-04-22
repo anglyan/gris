@@ -1,8 +1,5 @@
 Documentation
 =============
 
-..  toctree::
-    :maxdepth: 1
-
-    read_ris
+.. autofunction:: gris.read_ris
 
