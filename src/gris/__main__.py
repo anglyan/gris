@@ -1,4 +1,4 @@
-from .gris import read_ris
+from .gris import read_ris, tag2list
 
 import sys
 
@@ -9,7 +9,7 @@ if len(sys.argv) !=3:
 else:
     tag = sys.argv[2]
     for i, ref in enumerate(rlist):
-        value = ref.get(tag, 'NA')
+        value = tag2list(ref, tag)
         if not isinstance(value, list):
             value = [value]
         for val in value:
