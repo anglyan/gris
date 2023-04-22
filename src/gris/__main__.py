@@ -1,4 +1,4 @@
-from .gris import read_ris, tag2string
+from .gris import read_ris
 
 import sys
 

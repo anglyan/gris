@@ -40,13 +40,13 @@ def read_ris(filename, wok=False):
 
     if wok:
         gettag = lambda line: line[0:2]
-        getcontent = lambda line: line[2:]
+        getcontent = lambda line: line[2:].strip()
         istag = lambda line: (wokpat.match(line) != None )
         starttag, endtag = wok_boundtags
         ignoretags = wok_ignoretags
     else:
         gettag = lambda line: line[0:2]
-        getcontent = lambda line: line[6:]
+        getcontent = lambda line: line[6:].strip()
         istag = lambda line: (rispat.match(line) != None )
         starttag, endtag = ris_boundtags
         ignoretags = ris_ignoretags
@@ -204,54 +204,6 @@ def get_page(ref):
         return tag2string(ref, 'BP')
     else:
         return tag2string(ref, 'AR')
-
-
-def write_key(key):
-    return "{}  -".format(key)
-
-
-def write_entry(key, value):
-    """Return a string with the key, value
-    """
-
-    if not isinstance(value, list):
-        value = [value]
-    
-    lines = []
-    key_str = write_key(key)
-    lines = [key_str + " " + val.strip() for val in value]
-    return lines
-
-def write_ref(entry):
-    """Return a string with the content of the reference
-    in RIS format.
-
-    entry is a dictionary where tags are keys and the values are
-    either lists or strings containing the corresponding bibliographic
-    data
-    """
-
-    entrylines = write_key('PT', entry['PT'])
-    for k, v in entry.items():
-        if k != 'PT':
-            entrylines.extend(write_key(k, v))
-    entrylines.append('ER')
-    return entrylines
-
-def write_ris(entrylist):
-    """Write a list of entries in the RIS file format
-
-    write_ris uses as an input a list of entries as codified
-    using read_ris, returning a list of strings. The current version
-    returns a wok-compatible ris format.
-
-    """
-    filelines = []
-    for entry in entrylist:
-        filelines.extend(write_ref(entry))
-        filelines.append("")
-    filelines.append('EF')
-    return filelines
 
 
 def get_country(add):
