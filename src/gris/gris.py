@@ -158,6 +158,7 @@ def get_authors(ref):
 
 
 def get_keywords(ref):
+    """Return a list of keywords"""
     if 'KW' in ref:
         return tag2list(ref, 'KW')
     else:
