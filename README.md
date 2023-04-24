@@ -41,14 +41,15 @@ from gris import read_ris
 
 refs = read_ris("myrefs.ris")
 ```
-
+For a more detailed description of `gris` and its capabilities check
+the [documentation](https://gris.readthedocs.io/en/latest/index.html).
 
 ## Background
 
 
 `gris` was developed by AYG during his personal time, as a way of transforming
 bibliographic data into more machine-readable formats and preserving
-all bibliographic data. It eventually found its way to various publications where the work required processing large amounts of bibliographic data.
+old bibliographic data. It eventually found its way to various publications where the work required processing large amounts of bibliographic data.
 
 `gris` imports RIS files with multiple references into a list of dictionaries.
 
