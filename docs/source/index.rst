@@ -6,14 +6,37 @@
 gris documentation
 ==================
 
-gris is a lightweight parser for RIS files.
+About
+-----
+
+``gris`` is a lightweight parser for RIS files.
+
+The `RIS data format <https://en.wikipedia.org/wiki/RIS_(file_format)>`_
+is a standardized format to exchange citation and bibliographic data. It 
+is widely used by digital libraries and library catalogs.
+
+This package implements a parser and conversion tools to extract data from
+a bibliography and store data in other more common formats, such as ``json``.
+
+
+Install
+-------
+
+Install ``gris`` directly using ``pip``::
+
+   pip install gris
+
+Alternatively, bleeding edge code can be found in `github <https://github.com/anglyan/gris>`_
+
+
 
 Table of contents
 -----------------
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    
+   specification
    apidocs/documentation
 
 
