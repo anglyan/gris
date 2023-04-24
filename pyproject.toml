@@ -7,7 +7,7 @@ build-backend = "setuptools.build_meta"
 name = "gris"
 authors = [
 { name="Angel Yanguas-Gil"}]
-version = "0.7.1"
+version = "0.8.0"
 description = "Parser of RIS file format"
 readme = "README.md"
 keywords = ["RIS file format", "RefMan RIS", "bibliography", "parser"]
@@ -23,4 +23,5 @@ classifiers = [
 
 [project.urls]
 "Homepage" = "https://github.com/anglyan/gris.git"
+"docs" = "https://gris.readthedocs.io/en/latest/index.html"
 
