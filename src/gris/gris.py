@@ -5,9 +5,9 @@
 
 """Methods to operate with the Refman RIS data format"""
 
-missing_data = 'NA'
+_missing_data = 'NA'
 
-ris_tags_ref = {
+_ris_tags_ref = {
     'TY': "Type of reference - first tag",
     'A1': "Primary Authors - usually mapped to AU",
     'A2': "Secondary Authors - normally used for Editors",
@@ -89,7 +89,7 @@ ris_tags_ref = {
     'ER': "End of Reference"
 }
 
-standard_ris_tags = {'TY', 'AU', 'A1', 'A2', 'A3', 'A4', 'AB', 'AD', 'AN', 'AV',
+_standard_ris_tags = {'TY', 'AU', 'A1', 'A2', 'A3', 'A4', 'AB', 'AD', 'AN', 'AV',
     'BT', 'C1', 'C2', 'C3', 'C4', 'C5', 'C6', 'C7', 'C8', 'CA', 'CN', 'CP',
     'CT', 'CY', 'DA', 'DB', 'DO', 'DP', 'ED', 'EP', 'ET', 'ID', 'IS', 'J1',
     'J2', 'JA', 'JF', 'JO', 'KW', 'L1', 'L2', 'L3', 'L4', 'LA', 'LB', 'LK',
@@ -97,15 +97,15 @@ standard_ris_tags = {'TY', 'AU', 'A1', 'A2', 'A3', 'A4', 'AB', 'AD', 'AN', 'AV',
     'RP', 'SE', 'SN', 'SP', 'ST', 'T1', 'T2', 'T3', 'TA', 'TI', 'TT', 'U1',
     'U3', 'U4', 'U5', 'UR', 'VL', 'VO', 'Y1', 'Y2', 'ER'}
 
-standard_ris_types = {
+_standard_ris_types = {
     "ABST", "ADVS", "ART", "BILL", "BOOK", "CASE", "CHAP", "COMP", 
     "CONF", "CONF", "CTLG", "DATA", "ELEC", "GEN", "HEAR", "ICOMM", "INPR", "JFULL",
     "JOUR", "MAP", "MGZN", "MPCT", "MUSIC", "NEWS", "PAMP", "PAT", "PCOMM", "RPTR",
     "SER", "SLIDE", "SOUND", "STAT", "UNBIL", "UNPB", "VIDEO"}
 
-extended_ris_types = {"CLSWK", "EBOOK", "ECHAP", "EJOUR"}
+_extended_ris_types = {"CLSWK", "EBOOK", "ECHAP", "EJOUR"}
 
-bibtext_ris_types = {
+_bibtext_ris_types = {
     "BOOK", "CHAP", "CLSWK", "CONF", "CPAPER", "EBOOK", "ECHAP", "EJOUR",
     "ELEC", "GEN", "JOUR", "MGZN", "RPRT", "SER", "THES", "UNPB"
 }
@@ -114,10 +114,10 @@ bibtext_ris_types = {
 def check_conforms(ref):
     """Check if a given reference conforms to the RIS standard
     """
-    standard_keys = all(k.upper() in standard_ris_tags for k in ref.keys())
+    standard_keys = all(k.upper() in _standard_ris_tags for k in ref.keys())
     pubtype = get_pubtype(ref)
-    standard_type = pubtype in standard_ris_types
-    extended_type = pubtype in extended_ris_types
+    standard_type = pubtype in _standard_ris_types
+    extended_type = pubtype in _extended_ris_types
     return standard_keys and (standard_type or extended_type)
 
 def get_pubtype(ref):
@@ -141,11 +141,11 @@ def get_authors(ref):
 def get_journal(ref):
     """Return the journal"""
     py = tag2string(ref, 'JO')
-    if py == missing_data:
+    if py == _missing_data:
         py = tag2string(ref, 'T2')
-    if py == missing_data:
+    if py == _missing_data:
         py = tag2string(ref, 'JF')
-    elif py == missing_data:
+    elif py == _missing_data:
         py = tag2string(ref, 'JA')
     return py
 
@@ -244,7 +244,7 @@ def tag2string(ref, t):
         else:
             return ref[t]
     else:
-        return missing_data
+        return _missing_data
 
 def tag2list(ref, t):
     """Return the content of tag t as a list, [] if the tag is not present
