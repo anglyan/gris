@@ -1,7 +1,7 @@
 import json
 import re
 import csv
-from .gris import clean_reference
+from .ris import clean_reference
 
 woktag = "^[A-Z][A-Z0-9] |^ER$|^EF$"
 ristag = "^[A-Z][A-Z0-9]  -"
