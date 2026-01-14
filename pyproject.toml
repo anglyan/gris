@@ -10,11 +10,11 @@ authors = [
 version = "0.9.0"
 description = "Parser of RIS file format"
 readme = "README.md"
+license = "GPL-2.0-or-later"
 keywords = ["RIS file format", "RefMan RIS", "bibliography", "parser"]
 classifiers = [
     "Programming Language :: Python :: 3",
     "Development Status :: 4 - Beta",
-    "License :: OSI Approved :: GNU General Public License v2 or later (GPLv2+)",
     "Operating System :: OS Independent",
     "Environment :: Console",
     "Topic :: Scientific/Engineering",
