@@ -29,6 +29,16 @@ Install ``gris`` directly using ``pip``::
 Alternatively, bleeding edge code can be found in `github <https://github.com/anglyan/gris>`_
 
 
+Usage
+-----
+
+The main way of reading RIS files is using ``read_ris``::
+
+   from gris import read_ris
+
+   data = read_ris("myreferences.ris")
+
+
 
 Table of contents
 -----------------
