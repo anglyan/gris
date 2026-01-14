@@ -45,7 +45,8 @@ Table of contents
 
 .. toctree::
    :maxdepth: 1
-   
+
+   tutorial
    specification
    apidocs/documentation
 
