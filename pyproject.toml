@@ -25,3 +25,6 @@ classifiers = [
 "Homepage" = "https://github.com/anglyan/gris.git"
 "docs" = "https://gris.readthedocs.io/en/latest/index.html"
 
+[project.optional-dependencies]
+testing = ["pytest"]
+
