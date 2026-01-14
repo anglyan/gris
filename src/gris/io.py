@@ -1,6 +1,5 @@
 import json
 import re
-import csv
 from .ris import clean_reference
 
 woktag = "^[A-Z][A-Z0-9] |^ER$|^EF$"
@@ -53,6 +52,7 @@ def read_ris(filename, wok=False):
     refs = []
     current = {}
     ln = 0
+    found_first_tag = False
 
     for line in filelines:
         ln += 1
@@ -60,6 +60,9 @@ def read_ris(filename, wok=False):
             #It is not a tag
             if len(line.strip()) == 0:
                 #Empty line
+                continue
+            if not found_first_tag:
+                #Skip any content before the first valid tag
                 continue
             if inref:
                 #Active reference
@@ -77,6 +80,7 @@ def read_ris(filename, wok=False):
                 raise IOError(text)
         else:
             #Get the new tag
+            found_first_tag = True
             tag = gettag(line)
             if tag in ignoretags:
                 continue
@@ -103,6 +107,9 @@ def read_ris(filename, wok=False):
                     current[tag].append(getcontent(line))
                 else:
                     current[tag] = getcontent(line)
+
+    if not found_first_tag:
+        raise IOError(f"No valid RIS content found in file: {filename}")
 
     refs = [clean_reference(r) for r in refs]
 

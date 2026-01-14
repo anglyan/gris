@@ -1,0 +1,30 @@
+Provider: Silverchair
+Database: AIPPublishing
+Content: text/plain; charset="UTF-8"
+
+TY  - JOUR
+AU  - Yanguas-Gil, Angel
+AU  - Dearing, Matthew T.
+AU  - Elam, Jeffrey W.
+AU  - Jones, Jessica C.
+AU  - Kim, Sungjoon
+AU  - Mohammad, Adnan
+AU  - Thang Nguyen, Chi
+AU  - Sengupta, Bratin
+T1  - Benchmarking large language models for materials synthesis: The case of atomic layer deposition
+PY  - 2025
+Y1  - 2025/04/09
+DO  - 10.1116/6.0004319
+JO  - Journal of Vacuum Science & Technology A
+JA  - J. Vac. Sci. Technol. A
+VL  - 43
+IS  - 3
+SP  - 032406
+SN  - 0734-2101
+AB  - In this work, we introduce an open-ended question benchmark, ALDbench, to evaluate the performance of large language models (LLMs) in materials synthesis, and, in particular, in the field of atomic layer deposition, a thin film growth technique used in energy applications and microelectronics. Our benchmark comprises questions with a level of difficulty ranging from the graduate level to domain expert current with the state of the art in the field. Human experts reviewed the questions along the criteria of difficulty and specificity, and the model responses along four different criteria: overall quality, specificity, relevance, and accuracy. We ran this benchmark on an instance of OpenAI’s GPT-4o. The responses from the model received a composite quality score of 3.7 on a 1–5 scale, consistent with a passing grade. However, 36% of the questions received at least one below average score. An in-depth analysis of the responses identified at least five instances of suspected hallucination. Finally, we observed statistically significant correlations between the difficulty of the question and the quality of the response, the difficulty of the question and the relevance of the response, the specificity of the question, and the accuracy of the response as graded by the human experts. This emphasizes the need to evaluate LLMs across multiple criteria beyond difficulty or accuracy.
+Y2  - 1/14/2026
+UR  - https://doi.org/10.1116/6.0004319
+ER  - 
+
+
+
