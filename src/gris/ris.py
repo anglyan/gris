@@ -5,7 +5,10 @@
 
 """Methods to operate with the Refman RIS data format"""
 
+import re
+
 _missing_data = 'NA'
+_year_pat = re.compile(r'(?<!\d)\d{4}(?!\d)')
 
 _ris_tags_ref = {
     'TY': "Type of reference - first tag",
@@ -160,12 +163,25 @@ def get_issue(ref):
     return tag2string(ref, 'IS')
 
 
+def get_pubdate(ref):
+    """Return the raw publication date string, 'NA' if not present.
+
+    Tags are tried in order of preference: PY, Y1 and DA. Zotero exports
+    the year in PY and the full date in DA, and may leave PY out when
+    it cannot parse the date, so DA is used as a last resort.
+    """
+    for tag in ('PY', 'Y1', 'DA'):
+        value = tag2string(ref, tag).strip()
+        if value and value != _missing_data and _year_pat.search(value):
+            return value
+    return _missing_data
+
+
 def get_pubyear(ref):
-    """Return the publication year"""
-    if 'PY' in ref:
-        return tag2string(ref, 'PY')
-    else:
-        return tag2string(ref, 'Y1')
+    """Return the four digit publication year as a string, 'NA' if it
+    cannot be determined"""
+    match = _year_pat.search(get_pubdate(ref))
+    return match.group(0) if match else _missing_data
 
 
 def get_startpage(ref):
