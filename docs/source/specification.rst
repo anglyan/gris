@@ -57,50 +57,6 @@ type. Publication types in the standard implementation include:
 A record must end with an ``ER`` tag. The rest of the tags can be
 in any order.
 
-Extensions to the standard
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-In addition to the publication types listed above, other publication types
-that can be found in later revisions of the format and in files produced
-by other tools include:
-
-.. code-block:: text
-
-    CLSWK, CPAPER, EBOOK, ECHAP, EJOUR
-
-Zotero-specific publication types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The RIS export of Zotero uses most of the types listed above, but it also
-uses custom publication types that are not part of the original
-specification:
-
-.. code-block:: text
-
-    BLOG, DICT, ENCYC, MANSCPT
-
-Zotero exports conference papers as ``CONF`` and reads ``CPAPER`` only when
-importing. By default :func:`gris.check_conforms` only accepts the original
-types and the extensions above; pass ``zotero=True`` to also accept the
-Zotero-specific types.
-
-Zotero writes the publication year in ``PY`` and the full date in ``DA`` as
-``YYYY/MM/DD/extra info``, with empty fields left blank
-(for instance ``2020///``). If Zotero cannot parse a date, the original
-text is written instead.
-
-Bibtex-compatible publication types
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The set of publication types covered by the RIS format is larger than
-that of BibTeX. The subset of types that have a clear BibTeX counterpart
-include:
-
-.. code-block:: text
-
-    BOOK, CHAP, CLSWK, CONF, CPAPER, EBOOK, ECHAP, EJOUR,
-    ELEC, GEN, JOUR, MGZN, RPRT, SER, THES, UNPB
-
 Standard tags
 -------------
 
@@ -189,3 +145,54 @@ A list of the standard tags with basic definitions are provided here::
     }
 
 This list is included in ``gris`` for reference purposes.
+
+
+
+Extensions to the standard
+--------------------------
+
+In addition to the publication types listed above, other publication types
+that can be found in later revisions of the format and in files produced
+by other tools include:
+
+.. code-block:: text
+
+    CLSWK, CPAPER, EBOOK, ECHAP, EJOUR
+
+As of 2026 AIP has messed up with the RIS format by adding a header.
+This has broken tools like BibDesk, which do not recognize
+this extension (Great job, AIP!).
+
+Zotero-specific publication types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The RIS export of Zotero uses most of the types listed above, but it also
+uses custom publication types that are not part of the original
+specification:
+
+.. code-block:: text
+
+    BLOG, DICT, ENCYC, MANSCPT
+
+Zotero exports conference papers as ``CONF`` and reads ``CPAPER`` only when
+importing. By default :func:`gris.check_conforms` only accepts the original
+types and the extensions above; pass ``zotero=True`` to also accept the
+Zotero-specific types.
+
+Zotero writes the publication year in ``PY`` and the full date in ``DA`` as
+``YYYY/MM/DD/extra info``, with empty fields left blank
+(for instance ``2020///``). If Zotero cannot parse a date, the original
+text is written instead.
+
+Bibtex-compatible publication types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The set of publication types covered by the RIS format is larger than
+that of BibTeX. The subset of types that have a clear BibTeX counterpart
+include:
+
+.. code-block:: text
+
+    BOOK, CHAP, CLSWK, CONF, CPAPER, EBOOK, ECHAP, EJOUR,
+    ELEC, GEN, JOUR, MGZN, RPRT, SER, THES, UNPB
+

@@ -102,7 +102,7 @@ There are a number of cases that are not covered by the default encoding.
 
 - Old DOS exports (`Code page 850`_): Could use the ``cp850`` or ``cp437`` encodings.
 
-- `UTF-16`_: Use ``utf-16`.
+- `UTF-16`_: Use ``utf-16``.
 
 If you do not know the encoding, the ``file``
 command (``file -I`` on macOS) or the ``chardet`` and ``charset-normalizer``
