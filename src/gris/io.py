@@ -189,7 +189,7 @@ def load_json(file_name):
     return refs
     
 
-def write_ris(file_name, entrylist):
+def write_ris(file_name, entrylist, native_newlines=False):
     """Write a list of entries in the RIS file format
 
     write_ris uses as an input a list of entries as codified
@@ -200,12 +200,21 @@ def write_ris(file_name, entrylist):
     Zotero and other reference managers when importing RIS files, and
     read_ris reads it back, with or without a BOM.
 
+    Args:
+        file_name (:obj:`str`) : path of the file to write.
+        entrylist (:obj:`list`) : list of entries, as returned by read_ris.
+        native_newlines (:obj:`bool`, optional) : by default, lines end
+            with ``\\r\\n`` on every platform, as required by the RIS
+            specification. If True, lines end with the line separator of
+            the platform instead (``\\r\\n`` on Windows, ``\\n`` elsewhere).
+
     """
     filelines = []
     for entry in entrylist:
         filelines.extend(write_ref(entry))
         filelines.append("")
-    with open(file_name, 'w', encoding='utf-8') as f:
+    newline = None if native_newlines else '\r\n'
+    with open(file_name, 'w', encoding='utf-8', newline=newline) as f:
         f.write("\n".join(filelines))
     return filelines
 

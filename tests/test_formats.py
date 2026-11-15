@@ -1,6 +1,7 @@
 import pytest
 from pathlib import Path
-from gris import read_ris
+from gris import read_ris, write_ris
+import os
 import tempfile
 
 
@@ -154,3 +155,36 @@ def test_read_ris_wrong_encoding_is_silent():
     wrong text, which is why gris does not guess the encoding."""
     wrong = read_ris(str(ENCODING_DIR / "mac_roman.ris"), encoding="latin-1")
     assert wrong[0]["TI"] != ENCODED_FILES["mac_roman.ris"][1]
+
+
+@pytest.fixture
+def sample_entries():
+    return read_ris(str(ENCODING_DIR / "utf8.ris"))
+
+
+def test_write_ris_default_uses_crlf(tmp_path, sample_entries):
+    """By default lines end with CRLF on every platform, with no BOM."""
+    out = tmp_path / "out.ris"
+    write_ris(str(out), sample_entries)
+    data = out.read_bytes()
+    assert b"\r\n" in data
+    assert data.replace(b"\r\n", b"").count(b"\n") == 0
+    assert not data.startswith(b"\xef\xbb\xbf")
+
+
+def test_write_ris_native_newlines(tmp_path, sample_entries):
+    """native_newlines=True uses the platform line separator."""
+    out = tmp_path / "out.ris"
+    write_ris(str(out), sample_entries, native_newlines=True)
+    data = out.read_bytes()
+    sep = os.linesep.encode()
+    assert data.replace(sep, b"").count(b"\n") == 0
+    assert sep in data
+
+
+@pytest.mark.parametrize("native", [False, True])
+def test_write_ris_round_trip(tmp_path, sample_entries, native):
+    """Writing and reading back preserves non-ASCII text for both options."""
+    out = tmp_path / "out.ris"
+    write_ris(str(out), sample_entries, native_newlines=native)
+    assert read_ris(str(out)) == sample_entries
