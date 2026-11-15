@@ -18,6 +18,8 @@ is widely used by digital libraries and library catalogs.
 This package implements a parser and conversion tools to extract data from
 a bibliography and store data in other more common formats, such as ``json``.
 
+To allow compatibility with older files the 
+
 
 Install
 -------
@@ -48,6 +50,9 @@ Table of contents
 
    tutorial
    specification
+   fields
+   zotero
+   encodings
    apidocs/documentation
 
 
