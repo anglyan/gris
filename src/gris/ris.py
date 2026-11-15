@@ -8,6 +8,7 @@
 import re
 
 _missing_data = 'NA'
+_journal_tags = ('JO', 'T2', 'JF', 'JA', 'J2', 'J1')
 _year_pat = re.compile(r'(?<!\d)\d{4}(?!\d)')
 
 _ris_tags_ref = {
@@ -156,15 +157,17 @@ def get_authors(ref):
 
 
 def get_journal(ref):
-    """Return the journal"""
-    py = tag2string(ref, 'JO')
-    if py == _missing_data:
-        py = tag2string(ref, 'T2')
-    if py == _missing_data:
-        py = tag2string(ref, 'JF')
-    elif py == _missing_data:
-        py = tag2string(ref, 'JA')
-    return py
+    """Return the journal, 'NA' if not present
+
+    Tags are tried in order of preference: JO, T2, JF, and then, as a last
+    resort, the abbreviated names JA, J2 and J1. Zotero writes the journal
+    title in T2 and the abbreviation in J2.
+    """
+    for tag in _journal_tags:
+        value = tag2string(ref, tag)
+        if value != _missing_data:
+            return value
+    return _missing_data
 
 
 def get_volume(ref):
