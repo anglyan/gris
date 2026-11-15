@@ -1,0 +1,3 @@
+# Local-only extras for previewing the docs; not used by Read the Docs.
+-r requirements.txt
+sphinx-autobuild

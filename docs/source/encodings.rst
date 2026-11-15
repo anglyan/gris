@@ -98,6 +98,7 @@ Choosing the encoding
 ^^^^^^^^^^^^^^^^^^^^^
 
 There are a number of cases that are not covered by the default encoding.
+
 =========================================  ===================  =============
 Source of the file                         ``encoding``         Notes
 =========================================  ===================  =============
@@ -139,9 +140,9 @@ required by the RIS specification. However, using ``native_newlines=True``
 you can write files using the local platform's line endings 
 (``\r\n`` on Windows, ``\n`` elsewhere).
 
- ``write_json`` and ``load_json`` do not take an ``encoding`` argument.
- ``write_json`` writes UTF-8 and keeps non-ASCII characters as they are
-  (``ensure_ascii=False``). ``load_json`` reads files with the ``utf-8-sig`` codec,
+``write_json`` and ``load_json`` do not take an ``encoding`` argument.
+``write_json`` writes UTF-8 and keeps non-ASCII characters as they are
+(``ensure_ascii=False``). ``load_json`` reads files with the ``utf-8-sig`` codec,
 
 
 .. _UTF-8: https://en.wikipedia.org/wiki/UTF-8

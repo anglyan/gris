@@ -30,7 +30,7 @@ The tags: ``A1`` and ``AU`` are used for the primary authors
 of a reference, with each tag containing the name of only one
 author. The author name is encoded as follows:
 
-.. code-block:: ignore
+.. code-block:: text
 
     LastName, FirstName, Suffix
 
@@ -44,14 +44,14 @@ Publication date
 The tags ``Y1`` and ``PY`` are used to encode the publication date
 information, which should be in the format:
 
-.. code-block:: ignore
+.. code-block:: text
 
     YYYY/MM/DD/extra info
 
 As of March 2023 some articles exported from WebOfScience use
 the ``C6`` tag to describe the month and year of publication as:
 
-.. code-block:: ignore
+.. code-block:: text
 
     Month YYYY
 

@@ -1,65 +1,63 @@
-.. gris documentation master file, created by
-   sphinx-quickstart on Fri Apr 21 01:29:59 2023.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+gris
+====
 
-gris documentation
-==================
+``gris`` is a lightweight Python parser for
+`RIS files <https://en.wikipedia.org/wiki/RIS_(file_format)>`. 
 
-About
------
+RIS is one of the main standardized formats used by libraries, publishers and reference
+managers to exchange citation and bibliographic data.
 
-``gris`` is a lightweight parser for RIS files.
+``gris`` reads RIS files into plain Python dictionaries that can be inspected,
+filtered, or converted to other formats such as ``json``. It is also tolerant
+of the non-standard variations found in files exported by publishers and
+tools such as Zotero.
 
-The `RIS data format <https://en.wikipedia.org/wiki/RIS_(file_format)>`_
-is a standardized format to exchange citation and bibliographic data. It 
-is widely used by digital libraries and library catalogs.
+Installation
+------------
 
-This package implements a parser and conversion tools to extract data from
-a bibliography and store data in other more common formats, such as ``json``.
-
-To allow compatibility with older files the 
-
-
-Install
--------
-
-Install ``gris`` directly using ``pip``::
+Install ``gris`` from PyPI using ``pip``::
 
    pip install gris
 
-Alternatively, bleeding edge code can be found in `github <https://github.com/anglyan/gris>`_
+The latest development version is available on
+`GitHub <https://github.com/anglyan/gris>`_.
 
+Quickstart
+----------
 
-Usage
------
-
-The main way of reading RIS files is using ``read_ris``::
+Read a RIS file with :func:`gris.read_ris`::
 
    from gris import read_ris
 
    data = read_ris("myreferences.ris")
 
+Each reference is a dictionary keyed by its two-letter RIS tags. See the
+:doc:`tutorial` for a walkthrough.
 
+Where to go next
+----------------
 
-Table of contents
------------------
+* New to ``gris``? Start with the :doc:`tutorial`.
+* Check :doc:`encodings` to see how `gris` works with multiple text encodings and older files.
+* See :doc:`zotero` to explore how `gris` handles exports from Zotero.
 
 .. toctree::
-   :maxdepth: 1
+   :hidden:
+   :caption: Getting started
 
    tutorial
-   specification
-   fields
-   zotero
+
+.. toctree::
+   :hidden:
+   :caption: Guides
+
    encodings
+   zotero
+   fields
+
+.. toctree::
+   :hidden:
+   :caption: Reference
+
+   specification
    apidocs/documentation
-
-
-
-Indices and tables
-------------------
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`

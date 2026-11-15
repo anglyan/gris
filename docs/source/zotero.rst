@@ -37,7 +37,7 @@ with ``TI``, ``AU``, ``T2``, ``A2``, ``T3``, ``A3``, ``A4`` and ``AB``. Records 
 line, and lines end in ``\r\n``. A short example of a Zotero-style
 record is:
 
-.. code-block:: ignore
+.. code-block:: text
 
     TY  - JOUR
     TI  - A test article

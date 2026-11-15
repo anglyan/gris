@@ -5,7 +5,7 @@ The `RIS data format <https://en.wikipedia.org/wiki/RIS_(file_format)>`_ is
 a tag based file format containing one or more citations. A sample file
 is shown here:
 
-.. code-block:: ignore
+.. code-block:: text
 
     TY  - JOUR
     AU  - Spitz, François
@@ -30,7 +30,7 @@ Tag format
 
 Tags are six-character long, with the following structure:
 
-.. code-block:: ignore
+.. code-block:: text
 
     XXss-s
 
@@ -47,7 +47,7 @@ Bibliographic record format
 A bibliographic record must start with a ``TY`` tag followed by the publication
 type. Publication types in the standard implementation include:
 
-.. code-block:: ignore
+.. code-block:: text
 
     ABST, ADVS, ART, BILL, BOOK, CASE, CHAP, COMP, 
     CONF, CTLG, DATA, ELEC, GEN, HEAR, ICOMM, INPR, JFULL,
@@ -64,7 +64,7 @@ In addition to the publication types listed above, other publication types
 that can be found in later revisions of the format and in files produced
 by other tools include:
 
-.. code-block:: ignore
+.. code-block:: text
 
     CLSWK, CPAPER, EBOOK, ECHAP, EJOUR
 
@@ -75,7 +75,7 @@ The RIS export of Zotero uses most of the types listed above, but it also
 uses custom publication types that are not part of the original
 specification:
 
-.. code-block:: ignore
+.. code-block:: text
 
     BLOG, DICT, ENCYC, MANSCPT
 
@@ -96,7 +96,7 @@ The set of publication types covered by the RIS format is larger than
 that of BibTeX. The subset of types that have a clear BibTeX counterpart
 include:
 
-.. code-block:: ignore
+.. code-block:: text
 
     BOOK, CHAP, CLSWK, CONF, CPAPER, EBOOK, ECHAP, EJOUR,
     ELEC, GEN, JOUR, MGZN, RPRT, SER, THES, UNPB

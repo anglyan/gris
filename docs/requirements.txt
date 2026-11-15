@@ -1,0 +1,4 @@
+# Dependencies needed to build the documentation (used by Read the Docs).
+sphinx>=7
+furo
+sphinx-copybutton
