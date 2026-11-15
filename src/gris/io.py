@@ -15,7 +15,7 @@ wok_boundtags = ('PT', 'ER')
 wok_ignoretags = ['FN', 'VR', 'EF']
 ris_ignoretags = []
 
-def read_ris(filename, wok=False, allow_truncated=True):
+def read_ris(filename, wok=False, allow_truncated=True, encoding='utf-8-sig'):
     """Parse a ris file and return a list of entries.
 
     Entries are codified as dictionaries whose keys are the
@@ -33,6 +33,11 @@ def read_ris(filename, wok=False, allow_truncated=True):
             end of record tag (``ER``). If True, a warning is issued and
             the incomplete record is discarded. If False, an IOError
             is raised. Defaults True.
+        encoding (:obj:`str`, optional) : encoding of the file. The default,
+            ``utf-8-sig``, reads UTF-8 with or without a byte order mark,
+            and therefore also plain ASCII files. Older files written in a
+            legacy 8-bit encoding need to be read with, for instance,
+            ``encoding='cp1252'`` or ``encoding='latin-1'``.
 
     """
 
@@ -49,10 +54,10 @@ def read_ris(filename, wok=False, allow_truncated=True):
         starttag, endtag = ris_boundtags
         ignoretags = ris_ignoretags
 
-    with open(filename, encoding='utf-8-sig', mode='r') as f:
+    with open(filename, encoding=encoding, mode='r') as f:
         filelines = f.readlines()
     #WOK saves text files as utf8 with BOM, BOM is not handled automatically
-    #by python 3, so we have to use utf-8-sig to deal with it.
+    #by python 3, so we have to use utf-8-sig (the default) to deal with it.
 
     inref = False
     tag = None
