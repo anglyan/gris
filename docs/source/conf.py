@@ -9,7 +9,7 @@
 project = 'gris'
 copyright = '2013-2026, Angel Yanguas-Gil'
 author = 'Angel Yanguas-Gil'
-release = '0.9.0'
+release = '0.9.1'
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
