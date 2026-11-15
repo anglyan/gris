@@ -1,4 +1,4 @@
-from gris import get_authors, read_ris, parse_year, parse_author
+from gris import get_authors, read_ris, parse_author
 import sys
 
 ref_list = read_ris(sys.argv[1])
