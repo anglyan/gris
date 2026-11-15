@@ -2,7 +2,7 @@ gris
 ====
 
 ``gris`` is a lightweight Python parser for
-`RIS files <https://en.wikipedia.org/wiki/RIS_(file_format)>`. 
+`RIS files <https://en.wikipedia.org/wiki/RIS_(file_format)>`_. 
 
 RIS is one of the main standardized formats used by libraries, publishers and reference
 managers to exchange citation and bibliographic data.

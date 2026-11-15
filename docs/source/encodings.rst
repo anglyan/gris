@@ -13,21 +13,15 @@ There is nothing in a plain text file that declares the type of encoding that
 it uses. For modern files, `UTF-8`_ is a common standard. For instance,
 Zotero's RIS export has a character encoding option whose default is UTF-8, and the Web of
 Knowledge export is UTF-8 with a `byte order mark`_. 
-Older references and tools
-that use the system code page may still produce files in `Latin-1`_ or `Windows-1252`_.
-The bytes of an accented character differ between these encodings, so a file
-cannot be read reliably without knowing, or guessing, which one it uses.
-
 A commmon approach used by older reference managers and publisher exports was to
 use the encoding of the system that created them. This means that old files
-can use `ASCII`_, Windows-1252 or `Mac Roman`_ depending on the OS.
+can use `ASCII`_, `Windows-1252`_ or `Mac Roman`_ depending on the OS.
 
-While pure ASCII files are valid UTF-8 and
-need no special treatment, files with accented characters in one of the 8-bit
-encodings are not valid UTF-8 and have to be read with an explicit
-``encoding`` argument. Choosing the wrong 8-bit encoding does not always
-raise an error: ``latin-1`` accepts any byte, and other encodings accept many
-files, so the result can be silently wrong text. This is a common problem with
+Some older encodings are subsets of more modern ones: for instance, 
+pure ASCII files are valid UTF-8. However, files with accented characters in one of the 8-bit
+encodings are not valid UTF-8. Choosing the wrong 8-bit encoding does not always
+raise an error: `Latin-1`_ accepts any byte, and other encodings accept many
+files, so the result can be garbled text. This is a common problem with
 Mac Roman files read as Latin-1 or Windows-1252.
 
 Byte order marks (BOM) are a second rabbit hole: some files using the UTF-8 encoding
@@ -37,7 +31,6 @@ invisible character, ``﻿``, at the start of the first line. The practical
 consequence is that the first
 tag reads ``﻿TY  -`` and no longer matches a standard RIS tag, which may trip
 the parser.
-
 
 A third potential issue are line endings: the RIS specification uses ``\r\n`` line endings,
 and Zotero writes them as well. However, files created on Unix systems use ``\n``.
@@ -50,12 +43,12 @@ look identical but not compare as equal.
 Python's current approach to encodings
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-As a side not, in Python, ``open(filename)`` without an ``encoding`` argument uses the
+As a side note, in Python, ``open(filename)`` without an ``encoding`` argument uses the
 locale's preferred encoding. This means that, on most Linux and macOS systems,
 the encoding used is UTF-8. On Windows, it is a legacy code page such as ``cp1252``.
 There are other exotic cases where it defaults to ASCII.
 
-This diversity can lead to errors popping up when files created in one OS is read
+This OS-specific behavior can lead to errors popping up when files created in one OS are read
 in another. For instance, under an ASCII locale, 
 reading the name Müller would raise a
 ``UnicodeEncodeError``. In some cases, such as reading a UTF-8 file with a
@@ -86,7 +79,7 @@ With the default ``encoding`` in ``read_ris``:
 - Plain UTF-8 files are read correctly.
 - The leading BOM is removed if present, so files from Web of Knowledge or other sources
   that write one parse correctly.
-- Both ``\n`` and ``\r\n`` line endings are handled, because Python converts
+- Both ``\n`` and ``\r\n`` line endings are handled, because Python silently converts
   them when reading text files.
 - Zotero, most current tools that use default UTF-8 with BOM, and Web of Knowledge should be read correctly
 - Legacy pure ASCII files, as a subset of UTF-8, can be read.
@@ -99,28 +92,21 @@ Choosing the encoding
 
 There are a number of cases that are not covered by the default encoding.
 
-=========================================  ===================  =============
-Source of the file                         ``encoding``         Notes
-=========================================  ===================  =============
-Old Windows exports (`Windows-1252`_)      ``cp1252``           Has curly
-                                                                quotes and
-                                                                dashes.
-`ISO 8859-1`_ files                        ``latin-1``          Accepts any
-                                                                byte, so it
-                                                                never raises.
-Old Mac files (`Mac Roman`_)               ``mac_roman``        Often
-                                                                mistaken for
-                                                                cp1252.
-Old DOS exports (`Code page 850`_)         ``cp850``            Also
-                                                                ``cp437``.
-`UTF-16`_, some Windows tools              ``utf-16``           Uses the BOM
-                                                                to get the
-                                                                byte order.
-=========================================  ===================  =============
+- Old Windows export: Use the ``cp1252`` encoding. This encoding can be recognized by its curly
+  quotes and dashes.
+
+- `ISO 8859-1`_ files: Use the ``latin-1`` encoding. Note that this accepts any byte, so it will never
+  raise an error.
+
+- Old Mac files: Use ``mac_roman``. This is often mistaken for ``cp1252``.
+
+- Old DOS exports (`Code page 850`_): Could use the ``cp850`` or ``cp437`` encodings.
+
+- `UTF-16`_: Use ``utf-16`.
 
 If you do not know the encoding, the ``file``
 command (``file -I`` on macOS) or the ``chardet`` and ``charset-normalizer``
-Python packages can suggest one, but treat the answer as a guess. Check
+Python packages can suggest one. Check
 that the accented characters in the output look right.
 
 
