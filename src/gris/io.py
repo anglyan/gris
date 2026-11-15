@@ -1,5 +1,6 @@
 import json
 import re
+import warnings
 from .ris import clean_reference
 
 woktag = "^[A-Z][A-Z0-9] |^ER$|^EF$"
@@ -14,7 +15,7 @@ wok_boundtags = ('PT', 'ER')
 wok_ignoretags = ['FN', 'VR', 'EF']
 ris_ignoretags = []
 
-def read_ris(filename, wok=False):
+def read_ris(filename, wok=False, allow_truncated=True):
     """Parse a ris file and return a list of entries.
 
     Entries are codified as dictionaries whose keys are the
@@ -27,6 +28,11 @@ def read_ris(filename, wok=False):
         filename (str) : input ris file
         wok (:obj:`bool`, optional) : old WebofKnowledge's other document
             format is used if True. Defaults False.
+        allow_truncated (:obj:`bool`, optional) : controls what happens if
+            the file ends in the middle of a record, i.e. without the
+            end of record tag (``ER``). If True, a warning is issued and
+            the incomplete record is discarded. If False, an IOError
+            is raised. Defaults True.
 
     """
 
@@ -43,7 +49,8 @@ def read_ris(filename, wok=False):
         starttag, endtag = ris_boundtags
         ignoretags = ris_ignoretags
 
-    filelines = open(filename, encoding='utf-8-sig', mode='r').readlines()
+    with open(filename, encoding='utf-8-sig', mode='r') as f:
+        filelines = f.readlines()
     #WOK saves text files as utf8 with BOM, BOM is not handled automatically
     #by python 3, so we have to use utf-8-sig to deal with it.
 
@@ -53,6 +60,7 @@ def read_ris(filename, wok=False):
     current = {}
     ln = 0
     found_first_tag = False
+    startln = None
 
     for line in filelines:
         ln += 1
@@ -97,6 +105,7 @@ def read_ris(filename, wok=False):
                     raise IOError(text)
                 current[tag] = getcontent(line)
                 inref = True
+                startln = ln
             else:
                 if not inref:
                     text = "Invalid start tag in line %d:\n %s" %(ln, line)
@@ -110,6 +119,14 @@ def read_ris(filename, wok=False):
 
     if not found_first_tag:
         raise IOError(f"No valid RIS content found in file: {filename}")
+
+    if inref:
+        text = (f"File ended in the middle of the record that starts in "
+                f"line {startln}: missing end of record tag in {filename}")
+        if not allow_truncated:
+            raise IOError(text)
+        warnings.warn(text + ". The incomplete record was discarded.",
+                      stacklevel=2)
 
     refs = [clean_reference(r) for r in refs]
 
