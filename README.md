@@ -57,7 +57,7 @@ old bibliographic data. It eventually found its way to various publications wher
 ## License
 
 
-Copyright (C) 2013 Angel Yanguas-Gil
+Copyright (C) 2013-2026 Angel Yanguas-Gil
 
 This program is free software, licensed under GPLv2 or later.
 A copy of the GPLv2 license is provided in the root directory of the source code.
