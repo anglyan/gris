@@ -6,6 +6,7 @@
 """Methods to operate with the Refman RIS data format"""
 
 import re
+from urllib.parse import unquote
 
 _missing_data = 'NA'
 _journal_tags = ('JO', 'T2', 'JF', 'JA', 'J2', 'J1')
@@ -13,6 +14,9 @@ _pubdate_tags = ('DA', 'Y1', 'PY')
 _pubyear_tags = ('PY', 'Y1', 'DA')
 _year_pat = re.compile(r'(?<!\d)\d{4}(?!\d)')
 _date_pat = re.compile(r'^\s*\d{4}\s*(?:/|$)')
+_newline_pat = re.compile(r'\s*[\r\n]+\s*')
+_doi_tags = ('DO', 'UR', 'L1', 'L2', 'L3', 'L4')
+_doi_pat = re.compile(r'10\.\d{4,9}/[^\s"<>?#]+')
 
 _ris_tags_ref = {
     'TY': "Type of reference - first tag",
@@ -146,9 +150,23 @@ def get_pubtype(ref):
     return tag2string(ref, 'TY')
 
 
-def get_title(ref):
-    """Return the pubication title"""
-    return tag2string(ref, 'TI')
+def get_title(ref, strip_newlines=False):
+    """Return the publication title, 'NA' if not present
+
+    TI is used if present, otherwise T1 (the primary title, which is what
+    sources such as AIP and ACS write).
+
+    Args:
+        ref (dict) : a reference as returned by read_ris
+        strip_newlines (:obj:`bool`, optional) : if True, line breaks
+            embedded in the title are replaced by spaces (see
+            remove_newlines). Defaults False.
+    """
+    if 'TI' in ref:
+        value = tag2string(ref, 'TI')
+    else:
+        value = tag2string(ref, 'T1')
+    return _maybe_strip_newlines(value, strip_newlines)
 
 
 def get_authors(ref):
@@ -159,17 +177,53 @@ def get_authors(ref):
         return tag2list(ref, 'A1')
 
 
-def get_journal(ref):
+def get_journal(ref, strip_newlines=False):
     """Return the journal, 'NA' if not present
 
     Tags are tried in order of preference: JO, T2, JF, and then, as a last
     resort, the abbreviated names JA, J2 and J1. Zotero writes the journal
     title in T2 and the abbreviation in J2.
+
+    Args:
+        ref (dict) : a reference as returned by read_ris
+        strip_newlines (:obj:`bool`, optional) : if True, line breaks
+            embedded in the journal name are replaced by spaces (see
+            remove_newlines). Defaults False.
     """
     for tag in _journal_tags:
         value = tag2string(ref, tag)
         if value != _missing_data:
-            return value
+            return _maybe_strip_newlines(value, strip_newlines)
+    return _missing_data
+
+
+def _extract_doi(text):
+    """Return the first DOI found in text, None if there is none"""
+    match = _doi_pat.search(unquote(text))
+    if not match:
+        return None
+    doi = match.group(0).rstrip('.,;:')
+    while doi.endswith(')') and doi.count(')') > doi.count('('):
+        doi = doi[:-1].rstrip('.,;:')
+    return doi
+
+
+def get_doi(ref):
+    """Return the DOI as a bare string such as '10.1021/acsami.1c00649',
+    'NA' if it cannot be found.
+
+    The DOI tag, DO, is tried first, followed by the tags that can contain
+    a link to the publication: UR, L1, L2, L3 and L4. Many sources
+    write the DOI as a URL, for instance 'https://doi.org/10.1021/acsami.1c00649',
+    or with a 'doi:' prefix, and in the DO tag as well as in UR, so
+    the DOI is extracted from the text in all cases. URL encoded characters
+    are decoded, and query strings and fragments are discarded.
+    """
+    for tag in _doi_tags:
+        for value in tag2list(ref, tag):
+            doi = _extract_doi(value)
+            if doi:
+                return doi
     return _missing_data
 
 
@@ -225,12 +279,20 @@ def get_endpage(ref):
     return tag2string(ref, 'EP')
 
 
-def get_abstract(ref):
-    """Return the abstract"""
+def get_abstract(ref, strip_newlines=False):
+    """Return the abstract
+
+    Args:
+        ref (dict) : a reference as returned by read_ris
+        strip_newlines (:obj:`bool`, optional) : if True, line breaks
+            embedded in the abstract are replaced by spaces (see
+            remove_newlines). Defaults False.
+    """
     if 'AB' in ref:
-        return tag2string(ref, 'AB')
+        value = tag2string(ref, 'AB')
     else:
-        return tag2string(ref, 'N2')
+        value = tag2string(ref, 'N2')
+    return _maybe_strip_newlines(value, strip_newlines)
 
 
 def get_keywords(ref):
@@ -275,6 +337,27 @@ def parse_author(v):
     if len(chunks) == 3:
         suffix = chunks[2]
     return name, first, suffix
+
+
+def remove_newlines(v):
+    """Remove line breaks embedded in a text field
+
+    Some sources, such as ACS, wrap long titles and abstracts over several
+    lines. Each line break, together with the whitespace around it, is
+    replaced by a single space, and leading and trailing whitespace is
+    removed. Text without line breaks is returned unchanged, except for
+    the stripping.
+
+    Args:
+        v (str) : the text to clean, for instance the output of get_title
+            or get_abstract.
+    """
+    return _newline_pat.sub(' ', v).strip()
+
+
+def _maybe_strip_newlines(value, strip_newlines):
+    """Apply remove_newlines to value if strip_newlines is True"""
+    return remove_newlines(value) if strip_newlines else value
 
 
 def clean_reference(ref):

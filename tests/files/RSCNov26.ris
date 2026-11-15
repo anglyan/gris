@@ -1,0 +1,26 @@
+Provider: Silverchair
+Database: TheRoyalSocietyofChemistry
+Content: text/plain; charset="UTF-8"
+
+TY  - JOUR
+AU  - Heikkinen, Niko
+AU  - Lehtonen, Juha
+AU  - Puurunen, Riikka L.
+T1  - An atomic layer deposition diffusion–reaction model for porous media with different particle geometries
+PY  - 2024
+Y1  - 2024/03/07
+DO  - 10.1039/d3cp05639b
+JO  - Physical Chemistry Chemical Physics
+JA  - Phys. Chem. Chem. Phys.
+VL  - 26
+IS  - 9
+SP  - 7580
+EP  - 7591
+SN  - 1463-9076
+AB  -  This work presents a diffusion–reaction model for atomic layer deposition (ALD), which has been adapted to describe radial direction reactant transport and adsorption kinetics in a porous particle. Specifically, we present the effect of three particle geometries: spherical, cylindrical and a slab in the diffusion–reaction model. The reactant diffusion propagates as a unidimensional front inside the slab particle, whereas with cylinder and spherical particles, the reactant diffusion approaches the particle centre from two and three dimensions, respectively. Due to additional reactant propagation dimensions, cylindrical and spherical particles require less exposure for full particle penetration. In addition to the particle geometry effect, a sensitivity analysis was used to compare the impact of the particles’ physical properties on the achieved penetration depth. The analysis evaluates properties, such as the combined porosity and tortuosity factor, mean pore diameter, specific surface area, pore volume, and particle radius. Furthermore, we address the impact of the reactant molar mass, growth-per-cycle (GPC), sticking probability, reactant exposure and deposition temperature on the simulated diffusion and surface coverage profiles. The diffusion–reaction model presented in this work is relevant for the design and optimization of ALD processes in porous media with different particle geometries. 
+Y2  - 11/15/2026
+UR  - https://doi.org/10.1039/d3cp05639b
+ER  - 
+
+
+

@@ -1,0 +1,24 @@
+TY  - JOUR
+T1  - Modeling the impact of incomplete conformality during atomic layer processing
+AU  - Reiter, Tobias
+AU  - Aguinsky, Luiz Felipe
+AU  - Rodrigues, Frâncio
+AU  - Weinbub, Josef
+AU  - Hössinger, Andreas
+AU  - Filipovic, Lado
+JO  - Solid-State Electronics
+VL  - 211
+SP  - 108816
+PY  - 2024
+DA  - 2024/01/01/
+SN  - 0038-1101
+DO  - https://doi.org/10.1016/j.sse.2023.108816
+UR  - https://www.sciencedirect.com/science/article/pii/S0038110123002290
+KW  - Atomic layer deposition
+KW  - 3D NAND fabrication
+KW  - Thin films
+KW  - High aspect ratio
+KW  - Langmuir kinetics
+KW  - Topography simulation
+AB  - Atomic layer processing (ALP) is a modern fabrication technique for the deposition or etching of materials, which provides precise control of film thickness, composition, and conformality on a nanometer scale. This makes it crucial for the fabrication of high aspect ratio (HAR) structures, such as 3D NAND memory stacks, as its self-limiting nature provides enhanced conformality compared to traditional processes. However, as the number of NAND stacks grows and the aspect ratio continues to increase, deviations from full conformality can often occur due to precursor desorption from the surface. In this regard, a model for surface coverage during ALD in the presence of desorption, leading to incomplete conformality, has been developed and implemented in process simulation frameworks. This work is an extension of our previous research which concentrated on developing an accurate modeling approach for ALD in HAR structures (L.Aguinsky et al., Solid State Electron. 201, 2023). The model combines existing Knudsen diffusion and Langmuir kinetics methods and includes the Bosanquet formula for gas-phase diffusivity and reaction reversibility. It has been incorporated into academic and commercial level-set-based topography simulators. The parameters for the model have been calibrated using published results for the ALD of Al2O3 from trimethylaluminum (TMA) and H2O in HAR geometries. The temperature dependence of the H2O step is likewise analyzed, revealing an activation energy of 0.178eV, which is consistent with recent experiments. In the TMA step, the Bosanquet formula leads to improved accuracy, and the same parameter set is able to reproduce multiple experiments, demonstrating that the model parameters accurately capture reactor conditions. Finally, the developed model is combined with atomic layer etching (ALE) to simulate the controlled, conformal deposition of HfO2 inside HAR 3D NAND structures.
+ER  - 

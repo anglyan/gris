@@ -1,0 +1,46 @@
+Provider: Silverchair
+Database: AmericanChemicalSociety
+Content: text/plain; charset="UTF-8"
+
+TY  - JOUR
+AU  - Paulson, Noah H.
+AU  - Yanguas-Gil, Angel
+AU  - Abuomar, Osama Y.
+AU  - Elam, Jeffrey W.
+T1  - Intelligent
+Agents for the Optimization of Atomic
+Layer Deposition
+PY  - 2021
+Y1  - 2021/04/14
+DO  - 10.1021/acsami.1c00649
+JO  - ACS Applied Materials & Interfaces
+JA  - ACS Appl. Mater. Interfaces
+VL  - 13
+IS  - 14
+SP  - 17022
+EP  - 17033
+SN  - 1944-8244
+AB  - Atomic layer deposition (ALD) is
+a highly controllable thin film
+synthesis approach with applications in computing, energy, and separations.
+The flexibility of ALD means that it can access a massive chemical
+catalogue; however, this chemical and process diversity results in
+significant challenges in determining processing parameters that result
+in stable and uniform film growth with minimal precursor consumption.
+In situ measurements of the ALD growth per cycle (GPC) can accelerate
+process development but it still requires expert intuition and time-consuming
+trial and error to identify acceptable processing parameters. This
+procedure is made more difficult by the presence of experimental noise
+in the GPC values and the complexity of ALD surface chemistries. A
+need exists for efficient optimization approaches capable of autonomously
+determining processing conditions resulting in optimal ALD film growth.
+In this work, we present the development of three optimization strategies
+and compare their performance in optimizing four simulated ALD processes.
+Furthermore, the effect of noise in the GPC measurements on optimization
+convergence is studied.
+Y2  - 11/15/2026
+UR  - https://doi.org/10.1021/acsami.1c00649
+ER  - 
+
+
+
