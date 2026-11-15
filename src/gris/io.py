@@ -155,18 +155,16 @@ def write_ref(entry):
 
 
 def write_json(file_name, refs):
-    with open(file_name, 'w') as f:
-        json.dump(refs, f, indent=4)
-        f.close()
+    with open(file_name, 'w', encoding='utf-8') as f:
+        json.dump(refs, f, indent=4, ensure_ascii=False)
 
 
 def load_json(file_name):
-    with open(file_name, 'r') as f:
+    with open(file_name, 'r', encoding='utf-8-sig') as f:
         refs = json.load(f)
-        f.close()
-        if not isinstance(refs, list):
-            refs = [refs]
-        return refs
+    if not isinstance(refs, list):
+        refs = [refs]
+    return refs
     
 
 def write_ris(file_name, entrylist):
@@ -175,14 +173,18 @@ def write_ris(file_name, entrylist):
     write_ris uses as an input a list of entries as codified
     using read_ris, returning a list of strings.
 
+    The file is always written as UTF-8 without a byte order mark,
+    independently of the system locale. This is the encoding expected by
+    Zotero and other reference managers when importing RIS files, and
+    read_ris reads it back, with or without a BOM.
+
     """
-    with open(file_name, 'w') as f:
-        filelines = []
-        for entry in entrylist:
-            filelines.extend(write_ref(entry))
-            filelines.append("")
+    filelines = []
+    for entry in entrylist:
+        filelines.extend(write_ref(entry))
+        filelines.append("")
+    with open(file_name, 'w', encoding='utf-8') as f:
         f.write("\n".join(filelines))
-        f.close()
     return filelines
 
 def get_country(add):
