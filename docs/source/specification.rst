@@ -51,8 +51,8 @@ type. Publication types in the standard implementation include:
 
     ABST, ADVS, ART, BILL, BOOK, CASE, CHAP, COMP, 
     CONF, CTLG, DATA, ELEC, GEN, HEAR, ICOMM, INPR, JFULL,
-    JOUR, MAP, MGZN, MPCT, MUSIC, NEWS, PAMP, PAT, PCOMM, RPTR,
-    SER, SLIDE, SOUND, STAT, UNBIL, UNPB, VIDEO
+    JOUR, MAP, MGZN, MPCT, MUSIC, NEWS, PAMP, PAT, PCOMM, RPRT,
+    SER, SLIDE, SOUND, STAT, THES, UNBILL, UNPB, VIDEO
 
 A record must end with an ``ER`` tag. The rest of the tags can be
 in any order.
@@ -61,11 +61,33 @@ Extensions to the standard
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In addition to the publication types listed above, other publication types
-that can be found include:
+that can be found in later revisions of the format and in files produced
+by other tools include:
 
 .. code-block:: ignore
 
-    CLSWK, EBOOK, ECHAP, EJOUR
+    CLSWK, CPAPER, EBOOK, ECHAP, EJOUR
+
+Zotero-specific publication types
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The RIS export of Zotero uses most of the types listed above, but it also
+writes the following types, which are not part of the original
+specification:
+
+.. code-block:: ignore
+
+    BLOG, DICT, ENCYC, MANSCPT
+
+Zotero exports conference papers as ``CONF`` and reads ``CPAPER`` only when
+importing. By default :func:`gris.check_conforms` only accepts the original
+types and the extensions above; pass ``zotero=True`` to also accept the
+Zotero-specific types.
+
+Zotero writes the publication year in ``PY`` and the full date in ``DA`` as
+``YYYY/MM/DD/extra info``, with empty fields left blank
+(for instance ``2020///``). If Zotero cannot parse a date, the original
+text is written instead.
 
 Bibtex-compatible publication types
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

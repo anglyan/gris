@@ -102,11 +102,18 @@ _standard_ris_tags = {'TY', 'AU', 'A1', 'A2', 'A3', 'A4', 'AB', 'AD', 'AN', 'AV'
 
 _standard_ris_types = {
     "ABST", "ADVS", "ART", "BILL", "BOOK", "CASE", "CHAP", "COMP", 
-    "CONF", "CONF", "CTLG", "DATA", "ELEC", "GEN", "HEAR", "ICOMM", "INPR", "JFULL",
-    "JOUR", "MAP", "MGZN", "MPCT", "MUSIC", "NEWS", "PAMP", "PAT", "PCOMM", "RPTR",
-    "SER", "SLIDE", "SOUND", "STAT", "UNBIL", "UNPB", "VIDEO"}
+    "CONF", "CTLG", "DATA", "ELEC", "GEN", "HEAR", "ICOMM", "INPR", "JFULL",
+    "JOUR", "MAP", "MGZN", "MPCT", "MUSIC", "NEWS", "PAMP", "PAT", "PCOMM", "RPRT",
+    "SER", "SLIDE", "SOUND", "STAT", "THES", "UNBILL", "UNPB", "VIDEO"}
 
-_extended_ris_types = {"CLSWK", "EBOOK", "ECHAP", "EJOUR"}
+# Types found in later revisions of the RIS format and in files from other
+# tools. They are not part of the original Refman specification.
+_extended_ris_types = {"CLSWK", "CPAPER", "EBOOK", "ECHAP", "EJOUR"}
+
+# Types written by Zotero's RIS export that are not part of the original
+# Refman specification (see the RIS translator in github.com/zotero/translators).
+# Zotero also exports types from the standard set above, such as THES and RPRT.
+_zotero_ris_types = {"BLOG", "DICT", "ENCYC", "MANSCPT"}
 
 _bibtext_ris_types = {
     "BOOK", "CHAP", "CLSWK", "CONF", "CPAPER", "EBOOK", "ECHAP", "EJOUR",
@@ -114,14 +121,21 @@ _bibtext_ris_types = {
 }
 
 
-def check_conforms(ref):
+def check_conforms(ref, zotero=False):
     """Check if a given reference conforms to the RIS standard
+
+    Args:
+        ref (dict) : a reference as returned by read_ris
+        zotero (:obj:`bool`, optional) : if True, also accept the
+            publication types that Zotero exports but that are not part of
+            the original specification. Defaults False.
     """
     standard_keys = all(k.upper() in _standard_ris_tags for k in ref.keys())
     pubtype = get_pubtype(ref)
-    standard_type = pubtype in _standard_ris_types
-    extended_type = pubtype in _extended_ris_types
-    return standard_keys and (standard_type or extended_type)
+    valid_types = _standard_ris_types | _extended_ris_types
+    if zotero:
+        valid_types = valid_types | _zotero_ris_types
+    return standard_keys and pubtype in valid_types
 
 def get_pubtype(ref):
     """Return the publication type"""
