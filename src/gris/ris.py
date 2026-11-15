@@ -9,7 +9,10 @@ import re
 
 _missing_data = 'NA'
 _journal_tags = ('JO', 'T2', 'JF', 'JA', 'J2', 'J1')
+_pubdate_tags = ('DA', 'Y1', 'PY')
+_pubyear_tags = ('PY', 'Y1', 'DA')
 _year_pat = re.compile(r'(?<!\d)\d{4}(?!\d)')
+_date_pat = re.compile(r'^\s*\d{4}\s*(?:/|$)')
 
 _ris_tags_ref = {
     'TY': "Type of reference - first tag",
@@ -180,24 +183,35 @@ def get_issue(ref):
     return tag2string(ref, 'IS')
 
 
-def get_pubdate(ref):
-    """Return the raw publication date string, 'NA' if not present.
-
-    Tags are tried in order of preference: PY, Y1 and DA. Zotero exports
-    the year in PY and the full date in DA, and may leave PY out when
-    it cannot parse the date, so DA is used as a last resort.
-    """
-    for tag in ('PY', 'Y1', 'DA'):
+def _first_dated_tag(ref, tags):
+    """Return the content of the first tag in tags that contains a year,
+    'NA' if there is none"""
+    for tag in tags:
         value = tag2string(ref, tag).strip()
-        if value and value != _missing_data and _year_pat.search(value):
+        if _year_pat.search(value):
             return value
     return _missing_data
 
 
+def get_pubdate(ref):
+    """Return the raw publication date string, 'NA' if not present.
+
+    Tags are tried in order of level of detail: DA, Y1 and PY, so that the
+    full date is returned when it is available. Zotero exports the
+    full date in DA and only the year in PY. Use parse_pubyear to split
+    the result into year, month, day and extra information.
+    """
+    return _first_dated_tag(ref, _pubdate_tags)
+
+
 def get_pubyear(ref):
     """Return the four digit publication year as a string, 'NA' if it
-    cannot be determined"""
-    match = _year_pat.search(get_pubdate(ref))
+    cannot be determined.
+
+    The year is taken from the first of PY, Y1 and DA that contains one.
+    """
+    value = _first_dated_tag(ref, _pubyear_tags)
+    match = _year_pat.search(value)
     return match.group(0) if match else _missing_data
 
 
@@ -228,19 +242,26 @@ def get_keywords(ref):
 
 
 def parse_pubyear(v):
-    """Parse a publication year field"""
-    chunks = v.split('/')
-    year = chunks[0].strip()
-    month = None
-    day = None
-    extra = None
-    if len(chunks) > 1:
-        month = chunks[1].strip()
-    if len(chunks) > 2:
-        day = chunks[2].strip()
-    if len(chunks) == 4:
-        extra = chunks[3].strip()
-    return year, month, day, extra
+    """Parse a publication date field
+
+    Dates in the RIS format are written as YYYY/MM/DD/extra info, where
+    any of the fields can be empty. Zotero writes dates in this format
+    when it can parse them, and the original free text otherwise (for
+    instance "March 5, 2018"). In the latter case only the year is
+    extracted.
+
+    Returns:
+        tuple : (year, month, day, extra). Fields that are empty or
+        cannot be determined are None.
+    """
+    if _date_pat.match(v):
+        chunks = [c.strip() or None for c in v.split('/', 3)]
+        chunks += [None] * (4 - len(chunks))
+        year, month, day, extra = chunks
+        return year, month, day, extra
+    match = _year_pat.search(v)
+    year = match.group(0) if match else None
+    return year, None, None, None
 
 
 def parse_author(v):
